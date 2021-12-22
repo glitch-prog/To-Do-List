@@ -1,10 +1,5 @@
 import { useState } from 'react';
-import {
- 
-  signInWithEmailAndPassword,
-  onAuthStateChanged,
-
-} from 'firebase/auth';
+import { signInWithEmailAndPassword, onAuthStateChanged } from 'firebase/auth';
 
 import { auth } from '../firebase-config';
 
@@ -44,6 +39,7 @@ export default function Login() {
         />
         <input
           placeholder='Password...'
+          type='password'
           onChange={(event) => {
             setLoginPassword(event.target.value);
           }}
@@ -51,6 +47,8 @@ export default function Login() {
 
         <button onClick={login}> Login</button>
       </div>
+      <h4> User Logged In: </h4>
+      {user?.email}
     </div>
   );
 }
