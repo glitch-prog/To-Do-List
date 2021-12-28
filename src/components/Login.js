@@ -33,7 +33,7 @@ export default function Login() {
     <div>
       <div>
         <h3> Login </h3>
-        <form action='/todo'>
+        <form>
           <input
             placeholder='Email...'
             onChange={(event) => {

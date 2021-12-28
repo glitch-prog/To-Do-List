@@ -1,6 +1,6 @@
 import React from 'react';
 import { useState, useEffect } from 'react';
-import { addDoc, getDocs, doc, collection } from 'firebase/firestore';
+import { addDoc, getDocs, collection } from 'firebase/firestore';
 import { db } from '../firebase-config';
 import { getAuth, onAuthStateChanged } from 'firebase/auth';
 
@@ -26,7 +26,13 @@ export default function Todo() {
   useEffect(() => {
     const getTodos = async () => {
       const data = await getDocs(todosCollectionRef);
-      setTodos(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
+
+      console.log(data.docs);
+      setTodos(
+        data.docs
+          .map((doc) => ({ ...doc.data(), id: doc.id }))
+          .filter((el) => el.uuid === uid)
+      );
     };
 
     getTodos();
