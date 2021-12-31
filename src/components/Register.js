@@ -5,7 +5,7 @@ import {
   onAuthStateChanged,
 } from 'firebase/auth';
 
-import { auth } from '../firebase-config';
+import { auth } from '../config/firebase-config';
 
 import React from 'react';
 
@@ -53,8 +53,7 @@ export default function Register() {
         <button onClick={register}> Create User</button>
       </div>
 
-      <h4> User Logged In: </h4>
-      {user?.email}
+      
       <div>
         <h3>Already registered?</h3>
         <Link to='/login_page'>Log in!</Link>
