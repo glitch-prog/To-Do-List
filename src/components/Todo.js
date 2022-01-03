@@ -63,7 +63,7 @@ export default function Todo() {
     handleClick();
   };
 
-  useEffect(() => {
+   useEffect(() => {
     const getTodos = async () => {
       const data = await getDocs(todosCollectionRef);
       setTodos(
@@ -77,9 +77,30 @@ export default function Todo() {
     getTodos();
   }, [uid, todosCollectionRef]);
 
+  let arr = [];
+
+  function generateBtns(){
+   
+    for(let i = 0;i<=30;i++){
+      arr[i]=i+1;
+      console.log(arr[i])
+    }
+    return arr;
+  }
+
+  generateBtns()
+
+  function getCalendarDate(){
+    let day = new Date();
+    day.getDate();
+  }
+  
+
   return (
     <div className='App'>
-      <DateButtton />
+      <div className='calendar'>{arr.map((date)=>{
+    return <div><button>{date}</button></div>
+  })}</div>;
       <input
         type='text'
         placeholder='name'
