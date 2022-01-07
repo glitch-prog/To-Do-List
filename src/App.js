@@ -13,10 +13,12 @@ import Start from './components/Start';
 import { Routes, Route } from 'react-router-dom';
 import Homepage from './components/Homepage';
 import Todo from './components/Todo';
+import DateButtton from './components/Calendar/DateButtton.js';
 
 export default function App() {
   return (
     <div>
+      <DateButtton />
       <Routes>
         <Route path='/' element={<Homepage />} />
         <Route path='/login_page' element={<Login />} />
