@@ -1,24 +1,26 @@
 import React from 'react';
 
 export default function DateButtton() {
-  let div = document.querySelector('.root');
-  let day;
+
+  let day = 1;
   function getTodayDay() {
     let date = new Date();
-    day = date.getDay();
+    day = date.getDate();
     console.log(day);
   }
 
   getTodayDay();
 
-  function getDateCal() {
+  function getDateCal(){
+    let div = document.querySelector('.root');
     div.addEventListener('click', (event) => {
       if (event.target.className === 'calendarBtn') {
         day = event.target.textContent;
+        console.log(day);
       }
-    });
-    console.log(day);
-  }
+    })}
+    
+  
 
   return (
     <>
