@@ -21,6 +21,8 @@ export default function Todo() {
 
   const todosCollectionRef = collection(db, 'todos');
 
+  let date = new Date();
+  let todayDay = date.getDate();
   let uid = null;
 
   const auth = getAuth();
@@ -40,7 +42,7 @@ export default function Todo() {
   }
 
   const createTodo = async () => {
-    const todo = { test: newTest, uuid: uid, status: 0 };
+    const todo = { test: newTest, uuid: uid, day: todayDay };
     await addDoc(todosCollectionRef, todo);
     setTodos([...todos, todo]);
   };
@@ -61,6 +63,11 @@ export default function Todo() {
   const logout = async () => {
     await signOut(auth);
     handleClick();
+  };
+
+  const filterByDay = async (id,day) => {
+    const todoDoc = doc(db, 'todos', id);
+    setTodos(todos.filter((todo) => day === todo.day));
   };
 
   useEffect(() => {
@@ -105,7 +112,7 @@ export default function Todo() {
           );
         })}
       </div> */}
-      
+
       <input
         type='text'
         placeholder='name'
@@ -117,7 +124,6 @@ export default function Todo() {
       {todos.map((todo) => {
         return (
           <div>
-           
             <p>{todo.test}</p>
             <input
               type='text'
