@@ -12,6 +12,7 @@ import { useNavigate } from 'react-router-dom';
 import { db } from '../config/firebase-config';
 import { getAuth, onAuthStateChanged, signOut } from 'firebase/auth';
 // import buttonStyle from '../styles/button';
+import { uid,todayDay } from '../utils/variables';
 
 export default function Todo() {
   const [newTest, setNewTest] = useState('');
@@ -21,9 +22,8 @@ export default function Todo() {
 
   const todosCollectionRef = collection(db, 'todos');
 
-  let date = new Date();
-  let todayDay = date.getDate();
-  let uid = null;
+ 
+
 
   const auth = getAuth();
   onAuthStateChanged(auth, (user) => {
@@ -42,9 +42,11 @@ export default function Todo() {
   }
 
   const createTodo = async () => {
+    
     const todo = { test: newTest, uuid: uid, day: todayDay };
     await addDoc(todosCollectionRef, todo);
     setTodos([...todos, todo]);
+    console.log(todayDay)
   };
 
   const updateTodo = async (id) => {
@@ -65,10 +67,7 @@ export default function Todo() {
     handleClick();
   };
 
-  const filterByDay = async (id,day) => {
-    const todoDoc = doc(db, 'todos', id);
-    setTodos(todos.filter((todo) => day === todo.day));
-  };
+  
 
   useEffect(() => {
     const getTodos = async () => {
@@ -84,34 +83,29 @@ export default function Todo() {
     getTodos();
   }, [uid, todosCollectionRef]);
 
-  // let arr = [];
+  const filterByDay = async (day) => {
+     
 
-  // function generateBtns() {
-  //   for (let i = 0; i <= 30; i++) {
-  //     arr[i] = i + 1;
-  //     console.log(arr[i]);
-  //   }
-  //   return arr;
-  // }
+    // const todoDoc = doc(db, 'todos', day);
+    setTodos(todos.filter((todo) => day === todo.day));
+  };
+// //////
 
-  // // generateBtns()
+  const arr = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+  const [buttons, setButtons] = useState(arr);
+ 
 
-  // function getCalendarDate() {
-  //   let day = new Date();
-  //   day.getDate();
-  // }
+
+ 
+
 
   return (
     <div className='App'>
-      {/* <div className='calendar'>
-        {arr.map((date) => {
-          return (
-            <div>
-              <button style={buttonStyle}>{date}</button>
-            </div>
-          );
-        })}
-      </div> */}
+      <div>
+        {buttons.map((num) => {
+        return <button  onClick={()=>filterByDay(num)} key={num.toString()}>{num}</button>;
+      })}
+      </div>
 
       <input
         type='text'
@@ -125,15 +119,15 @@ export default function Todo() {
         return (
           <div>
             <p>{todo.test}</p>
-            <input
+            <input key={1}
               type='text'
               onChange={(event) => {
                 setUpdatedTest(event.target.value);
               }}
             ></input>
-            <button onClick={() => updateTodo(todo.id)}>Change</button>
-            <input type='checkbox'></input>
-            <button onClick={() => deleteTodo(todo.id)}>Delete</button>
+            <button key={2} onClick={() => updateTodo(todo.id)}>Change</button>
+            <input key={3} type='checkbox'></input>
+            <button key={4} onClick={() => deleteTodo(todo.id)}>Delete</button>
           </div>
         );
       })}
