@@ -11,7 +11,8 @@ import {
 import { useNavigate } from 'react-router-dom';
 import { db } from '../config/firebase-config';
 import { getAuth, onAuthStateChanged, signOut } from 'firebase/auth';
-// import buttonStyle from '../styles/button';
+import { todayDay } from '../utils/variables';
+import DateButtton from './Calendar/DateButtton';
 
 export default function Todo() {
   const [newTest, setNewTest] = useState('');
@@ -20,11 +21,7 @@ export default function Todo() {
   const [user, setUser] = useState({});
 
   const todosCollectionRef = collection(db, 'todos');
-
-  let date = new Date();
-  let todayDay = date.getDate();
   let uid = null;
-
   const auth = getAuth();
   onAuthStateChanged(auth, (user) => {
     if (user) {
@@ -65,11 +62,6 @@ export default function Todo() {
     handleClick();
   };
 
-  const filterByDay = async (id,day) => {
-    const todoDoc = doc(db, 'todos', id);
-    setTodos(todos.filter((todo) => day === todo.day));
-  };
-
   useEffect(() => {
     const getTodos = async () => {
       const data = await getDocs(todosCollectionRef);
@@ -84,34 +76,15 @@ export default function Todo() {
     getTodos();
   }, [uid, todosCollectionRef]);
 
-  // let arr = [];
-
-  // function generateBtns() {
-  //   for (let i = 0; i <= 30; i++) {
-  //     arr[i] = i + 1;
-  //     console.log(arr[i]);
-  //   }
-  //   return arr;
-  // }
-
-  // // generateBtns()
-
-  // function getCalendarDate() {
-  //   let day = new Date();
-  //   day.getDate();
-  // }
+  // const filterByDay = async (day) => {
+  //   // const todoDoc = doc(db, 'todos', day);
+  //   setTodos(todos.filter((todo) => day === todo.day));
+  // };
+  // //////
 
   return (
     <div className='App'>
-      {/* <div className='calendar'>
-        {arr.map((date) => {
-          return (
-            <div>
-              <button style={buttonStyle}>{date}</button>
-            </div>
-          );
-        })}
-      </div> */}
+      <DateButtton />
 
       <input
         type='text'
@@ -123,17 +96,22 @@ export default function Todo() {
       <button onClick={createTodo}>add</button>
       {todos.map((todo) => {
         return (
-          <div>
-            <p>{todo.test}</p>
+          <div key={todo.id}>
+            <p key={todo.test}>{todo.test}</p>
             <input
+              key={'input'}
               type='text'
               onChange={(event) => {
                 setUpdatedTest(event.target.value);
               }}
             ></input>
-            <button onClick={() => updateTodo(todo.id)}>Change</button>
-            <input type='checkbox'></input>
-            <button onClick={() => deleteTodo(todo.id)}>Delete</button>
+            <button key={todo.id} onClick={() => updateTodo(todo.id)}>
+              Change
+            </button>
+
+            <button key={'delete'} onClick={() => deleteTodo(todo.id)}>
+              Delete
+            </button>
           </div>
         );
       })}
