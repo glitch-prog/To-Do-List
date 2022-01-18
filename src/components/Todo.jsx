@@ -11,14 +11,16 @@ import {
 import { useNavigate } from 'react-router-dom';
 import { db } from '../config/firebase-config';
 import { getAuth, onAuthStateChanged, signOut } from 'firebase/auth';
-import { todayDay } from '../utils/variables';
+import { todayDay, login_page } from '../utils/variables';
 import DateButtton from './Calendar/DateButtton';
 
 export default function Todo() {
+  const navigate = useNavigate();
   const [newTest, setNewTest] = useState('');
   const [updatedTest, setUpdatedTest] = useState('');
   const [todos, setTodos] = useState([]);
   const [user, setUser] = useState({});
+  const [selectedDate, setSelectedDate] = useState(todayDay);
 
   const todosCollectionRef = collection(db, 'todos');
   let uid = null;
@@ -33,20 +35,19 @@ export default function Todo() {
     setUser(currentUser);
   });
 
-  let navigate = useNavigate();
   function handleClick() {
-    navigate('/login_page');
+    navigate({ login_page });
   }
 
   const createTodo = async () => {
-    const todo = { test: newTest, uuid: uid, day: todayDay };
+    const todo = { test: newTest, uuid: uid, day: selectedDate };
     await addDoc(todosCollectionRef, todo);
     setTodos([...todos, todo]);
   };
 
   const updateTodo = async (id) => {
     const todoDoc = doc(db, 'todos', id);
-    const newFields = { test: updatedTest, uuid: uid };
+    const newFields = { test: updatedTest, uuid: uid, day: selectedDate };
     await setDoc(todoDoc, newFields);
     setTodos([...todos, newFields]);
   };
@@ -76,15 +77,17 @@ export default function Todo() {
     getTodos();
   }, [uid, todosCollectionRef]);
 
-  // const filterByDay = async (day) => {
-  //   // const todoDoc = doc(db, 'todos', day);
-  //   setTodos(todos.filter((todo) => day === todo.day));
-  // };
   // //////
 
   return (
     <div className='App'>
-      <DateButtton />
+      <DateButtton
+        selectedDate={selectedDate}
+        setSelectedDate={setSelectedDate}
+        day={selectedDate}
+        setTodos={setTodos}
+        todos={todos}
+      />
 
       <input
         type='text'

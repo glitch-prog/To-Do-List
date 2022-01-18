@@ -8,6 +8,7 @@ import {
 import { auth } from '../config/firebase-config';
 
 import React from 'react';
+import { login_page } from '../utils/variables';
 
 export default function Register() {
   const [registerEmail, setRegisterEmail] = useState('');
@@ -53,10 +54,9 @@ export default function Register() {
         <button onClick={register}> Create User</button>
       </div>
 
-      
       <div>
         <h3>Already registered?</h3>
-        <Link to='/login_page'>Log in!</Link>
+        <Link to={login_page}>Log in!</Link>
       </div>
     </div>
   );

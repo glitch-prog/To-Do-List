@@ -2,13 +2,12 @@ import { useState } from 'react';
 import { signInWithEmailAndPassword, onAuthStateChanged } from 'firebase/auth';
 
 import { auth } from '../config/firebase-config';
-// import Todo from './Todo';
-// import { Navigate } from 'react-router-dom';
 import React from 'react';
-import { useNavigate,Link } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
+import { register_page } from '../utils/variables';
 
 export default function Login() {
-  let navigate = useNavigate();
+  const navigate = useNavigate();
   function handleClick() {
     navigate('/todo');
   }
@@ -57,7 +56,7 @@ export default function Login() {
       </div>
       <div>
         <h3>Not registered?</h3>
-        <Link to='/register_page'>Register!</Link>
+        <Link to={register_page}>Register!</Link>
       </div>
     </div>
   );
