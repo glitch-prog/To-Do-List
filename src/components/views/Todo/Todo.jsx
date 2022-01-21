@@ -19,21 +19,18 @@ export function TodoView({
 
   return (
     <div className='App'>
-      {/* <DateButtton /> */}
-      <input
-        type='text'
-        placeholder='name'
-        onChange={handleChangeText}
-      ></input>
+    
+      <input type='text' placeholder='name' onChange={handleChangeText}></input>
       <button onClick={createTodo}>add</button>
       {todos.map((todo) => {
+        console.log(todo);
         return (
           <div key={todo.id}>
             <p>{todo.test}</p>
             <input type='text' onChange={handleChangeUpdateText}></input>
-            <button onClick={handleClickUpdateText(todo.id)}>Change</button>
+            <button onClick={() => handleClickUpdateText(todo)}>Change</button>
 
-            <button onClick={handleClickDeleteTodo(todo.id)}>Delete</button>
+            <button onClick={() => handleClickDeleteTodo(todo)}>Delete</button>
           </div>
         );
       })}

@@ -7,7 +7,7 @@ export default function DateButtton({
   todos,
   day,
 }) {
-  const filterByDay = async (setTodos, todos, day) => {
+  const filterByDay =  (setTodos, todos, day) => {
     setTodos(todos.filter((todo) => day === todo.day));
     console.log('done');
   };

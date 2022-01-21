@@ -1,8 +1,6 @@
 import React from 'react';
 
-
-export function LogoutView(logout,user) {
-  
+export function LogoutView({ logout, user }) {
   return (
     <div>
       <h4> User Logged In: </h4>

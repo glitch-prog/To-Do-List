@@ -1,5 +1,5 @@
 import React from 'react';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import {
   addDoc,
   getDocs,
@@ -11,7 +11,7 @@ import {
 import { useNavigate } from 'react-router-dom';
 import { db } from '../../../config/firebase-config';
 import { getAuth, onAuthStateChanged, signOut } from 'firebase/auth';
-import { LOGIN_PAGE } from '../../../constants/constants';
+import { LOGIN_PAGE, TODAY_DAY } from '../../../constants/constants';
 
 import { TodoView } from '../../views/Todo/Todo';
 // import { logout } from '../utils/logout';
@@ -24,7 +24,7 @@ export function TodoContainer() {
   const [todos, setTodos] = useState([]);
   const [user, setUser] = useState({});
 
-  const todosCollectionRef = collection(db, 'todos');
+  const todosCollectionRef = useMemo(() => collection(db, 'todos'), []);
   let uid = null;
   const auth = getAuth();
   onAuthStateChanged(auth, (user) => {
@@ -38,27 +38,22 @@ export function TodoContainer() {
   });
 
   const createTodo = async () => {
-    const todo = { test: newTest, uuid: uid }; //day: selectedDate
+    const todo = { test: newTest, uuid: uid, day: TODAY_DAY }; //day: selectedDate
     await addDoc(todosCollectionRef, todo);
     setTodos([...todos, todo]);
   };
 
   const updateTodo = async (id) => {
     const todoDoc = doc(db, 'todos', id);
-    const newFields = { test: updatedTest, uuid: uid }; //day: selectedDate
+    const newFields = { test: updatedTest, uuid: uid, day: TODAY_DAY }; //day: selectedDate
     await setDoc(todoDoc, newFields);
-    setTodos([...todos, newFields]);
+    setTodos([...todos, newFields].filter((todo) => id != todo.id));
   };
 
   const deleteTodo = async (id) => {
     const todoDoc = doc(db, 'todos', id);
     await deleteDoc(todoDoc);
     setTodos(todos.filter((todo) => id !== todo.id));
-  };
-
-  const logout = async () => {
-    await signOut(auth);
-    handleClick(navigate);
   };
 
   function handleClick(navigate) {
@@ -88,7 +83,7 @@ export function TodoContainer() {
     };
 
     getTodos();
-  }, [uid]);
+  }, [uid, todosCollectionRef]);
 
   // //////
 
@@ -97,7 +92,6 @@ export function TodoContainer() {
       user={user}
       todos={todos}
       setTodos={setTodos}
-    
       createTodo={createTodo}
       handleChangeText={handleChangeText}
       handleChangeUpdateText={handleChangeUpdateText}

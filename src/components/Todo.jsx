@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { useState, useEffect } from 'react';
 import {
   addDoc,
@@ -23,7 +23,8 @@ export default function Todo() {
   const [todos, setTodos] = useState([]);
   const [user, setUser] = useState({});
   const [selectedDay, setSelectedDay] = useState(TODAY_DAY);
-  const todosCollectionRef = collection(db, 'todos');
+  const todosCollectionRef = useMemo(() => collection(db, 'todos'),[] );
+
   let uid = null;
   const auth = getAuth();
   onAuthStateChanged(auth, (user) => {
@@ -65,6 +66,7 @@ export default function Todo() {
   }
 
   useEffect(() => {
+    console.log(useEffect);
     const getTodos = async () => {
       const data = await getDocs(todosCollectionRef);
       setTodos(
