@@ -9,20 +9,21 @@ import {
   doc,
 } from 'firebase/firestore';
 import { useNavigate } from 'react-router-dom';
-import { db } from '../config/firebase-config';
+import { db } from '../../../config/firebase-config';
 import { getAuth, onAuthStateChanged, signOut } from 'firebase/auth';
-import { LOGIN_PAGE, TODAY_DAY } from '../constants/constants';
-import DateButtton from './DateButtton';
+import { LOGIN_PAGE } from '../../../constants/constants';
+
+import { TodoView } from '../../views/Todo/Todo';
 // import { logout } from '../utils/logout';
 // import { TODAY_DAY } from '../constants/constants';
 
-export default function Todo() {
+export function TodoContainer() {
   const navigate = useNavigate();
   const [newTest, setNewTest] = useState('');
   const [updatedTest, setUpdatedTest] = useState('');
   const [todos, setTodos] = useState([]);
   const [user, setUser] = useState({});
-  const [selectedDay, setSelectedDay] = useState(TODAY_DAY);
+
   const todosCollectionRef = collection(db, 'todos');
   let uid = null;
   const auth = getAuth();
@@ -37,14 +38,14 @@ export default function Todo() {
   });
 
   const createTodo = async () => {
-    const todo = { test: newTest, uuid: uid, day: selectedDay };
+    const todo = { test: newTest, uuid: uid }; //day: selectedDate
     await addDoc(todosCollectionRef, todo);
     setTodos([...todos, todo]);
   };
 
   const updateTodo = async (id) => {
     const todoDoc = doc(db, 'todos', id);
-    const newFields = { test: updatedTest, uuid: uid };
+    const newFields = { test: updatedTest, uuid: uid }; //day: selectedDate
     await setDoc(todoDoc, newFields);
     setTodos([...todos, newFields]);
   };
@@ -64,6 +65,18 @@ export default function Todo() {
     navigate({ LOGIN_PAGE });
   }
 
+  const handleChangeText = (event) => {
+    setNewTest(event.target.value);
+  };
+
+  const handleChangeUpdateText = (event) => {
+    setUpdatedTest(event.target.value);
+  };
+
+  const handleClickUpdateText = (el) => updateTodo(el.id);
+
+  const handleClickDeleteTodo = (el) => deleteTodo(el.id);
+
   useEffect(() => {
     const getTodos = async () => {
       const data = await getDocs(todosCollectionRef);
@@ -75,52 +88,21 @@ export default function Todo() {
     };
 
     getTodos();
-  }, [uid, todosCollectionRef]);
+  }, [uid]);
 
   // //////
 
   return (
-    <div className='App'>
-      <DateButtton
-        selectedDate={selectedDay}
-        setSelectedDate={setSelectedDay}
-        setTodos={setTodos}
-        todos={todos}
-        day={TODAY_DAY}
-      />
-
-      <input
-        type='text'
-        placeholder='name'
-        onChange={(event) => {
-          setNewTest(event.target.value);
-        }}
-      ></input>
-      <button onClick={createTodo}>add</button>
-      {todos.map((todo) => {
-        return (
-          <div key={todo.id}>
-            <p key={todo.test}>{todo.test}</p>
-            <input
-              key={'input'}
-              type='text'
-              onChange={(event) => {
-                setUpdatedTest(event.target.value);
-              }}
-            ></input>
-            <button key={todo.id} onClick={() => updateTodo(todo.id)}>
-              Change
-            </button>
-
-            <button key={'delete'} onClick={() => deleteTodo(todo.id)}>
-              Delete
-            </button>
-          </div>
-        );
-      })}
-      <h4> User Logged In: </h4>
-      <p>{user?.email}</p>
-      <button onClick={logout}>Log out</button>
-    </div>
+    <TodoView
+      user={user}
+      todos={todos}
+      setTodos={setTodos}
+    
+      createTodo={createTodo}
+      handleChangeText={handleChangeText}
+      handleChangeUpdateText={handleChangeUpdateText}
+      handleClickUpdateText={handleClickUpdateText}
+      handleClickDeleteTodo={handleClickDeleteTodo}
+    />
   );
 }
