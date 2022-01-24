@@ -1,23 +1,8 @@
-* {
-  padding: 0;
-  margin: 0;
-  box-sizing: border-box;
-}
-
-p {
-  font-family: Commissioner;
-  font-style: normal;
-  font-weight: normal;
-  font-size: 24px;
-  line-height: 140%;
-  letter-spacing: 0.01em;
-  color: #000000;
-  margin-bottom: 14px;
-}
-
-.wrapper {
-  padding-top: 3%;
-  padding-bottom: 5%;
+.main__block {
+  padding-bottom: 158px;
+  padding-top: 158px;
+  padding-right: 192px;
+  padding-left: 192px;
   min-width: 768px;
   display: flex;
   flex-direction: column;
@@ -31,57 +16,57 @@ p {
   border-radius: 20px;
 }
 
-.form {
+.homepage__card {
+  width: 384px;
   display: flex;
   flex-direction: column;
-  justify-content: center;
   align-items: center;
+  justify-content: center;
+  background: #ecfaf9;
+  border-radius: 20px;
 }
 
-.title {
-  font-family: Commissioner;
-  font-style: normal;
-  font-weight: 500;
-  font-size: 64px;
-  line-height: 140%;
-  letter-spacing: 0.01em;
-  color: #000000;
-  margin-bottom: 56px;
-}
-
-.signin__input {
-  width: 400px;
-  height: 47px;
-  border: 2px solid rgba(77, 77, 77, 0.47);
-  box-sizing: border-box;
-  border-radius: 10px;
-  padding-left: 16px;
+.homepage__card__title {
+  padding-left: 90px;
+  padding-right: 90px;
+  padding-top: 90px;
+  padding-bottom: 20px;
   font-family: Commissioner;
   font-style: normal;
   font-weight: normal;
   font-size: 24px;
   line-height: 140%;
-
+  text-align: center;
   letter-spacing: 0.01em;
   color: #000000;
-  margin-bottom: 32px;
 }
 
-.signin__btn {
-  width: 400px;
-  height: 47px;
+.homepage__card__description {
+  margin-bottom: 30px;
   font-family: Commissioner;
   font-style: normal;
   font-weight: normal;
   font-size: 24px;
   line-height: 140%;
   letter-spacing: 0.01em;
-  color: #ffffff;
+  color: #000000;
+}
+
+.start__btn {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  padding-left: 40px;
+  padding-right: 40px;
+  margin-bottom: 100px;
   background: #1bb7ac;
   border: none;
   border-radius: 10px;
-  margin-top: 24px;
-  margin-bottom: 56px;
+  font-family: Commissioner;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 18px;
+  line-height: 22px;
+  color: #ffffff;
 }
 
 .link {
@@ -92,5 +77,5 @@ p {
   line-height: 140%;
   letter-spacing: 0.01em;
   text-decoration: none;
-  color: #7b61ff;
+  color: #ffffff;
 }

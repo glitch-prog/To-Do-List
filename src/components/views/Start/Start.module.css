@@ -1,0 +1,35 @@
+.main__block {
+  width: 768px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding-top: 93px;
+  padding-bottom: 93px;
+  padding-left: 88px;
+  padding-right: 88px;
+  background: #ffffff;
+  border-radius: 20px;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #ffffff;
+  border-radius: 20px;}
+
+.start__card {
+  padding-left: 54px;
+  padding-right: 54px;
+  padding-top: 40px;
+  padding-bottom: 40px;
+  border-radius: 15px;
+}
+
+.start__card__sign__up {
+  background: #ecfaf9;
+}
+
+.start__card__sign__in {
+  background: #f1efff;
+}
