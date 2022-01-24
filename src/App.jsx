@@ -10,7 +10,6 @@ import {
 } from './constants/constants';
 import { TodoContainer } from './components/containers/Todo/Todo';
 import RegisterContainer from './components/containers/Register/Register';
-import Todo from './components/Todo';
 
 export default function App() {
   return (

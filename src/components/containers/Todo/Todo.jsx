@@ -8,23 +8,20 @@ import {
   collection,
   doc,
 } from 'firebase/firestore';
-import { useNavigate } from 'react-router-dom';
 import { db } from '../../../config/firebase-config';
-import { getAuth, onAuthStateChanged, signOut } from 'firebase/auth';
-import { LOGIN_PAGE, TODAY_DAY } from '../../../constants/constants';
-
+import { getAuth, onAuthStateChanged } from 'firebase/auth';
 import { TodoView } from '../../views/Todo/Todo';
-// import { logout } from '../utils/logout';
-// import { TODAY_DAY } from '../constants/constants';
+import { CalendarContainer } from '../Calendar/Calendar';
 
 export function TodoContainer() {
-  const navigate = useNavigate();
   const [newTest, setNewTest] = useState('');
   const [updatedTest, setUpdatedTest] = useState('');
   const [todos, setTodos] = useState([]);
   const [user, setUser] = useState({});
+  const [date, setDate] = useState();
 
   const todosCollectionRef = useMemo(() => collection(db, 'todos'), []);
+  // const todosCollectionRef = collection(db, 'todos');
   let uid = null;
   const auth = getAuth();
   onAuthStateChanged(auth, (user) => {
@@ -38,16 +35,22 @@ export function TodoContainer() {
   });
 
   const createTodo = async () => {
-    const todo = { test: newTest, uuid: uid, day: TODAY_DAY }; //day: selectedDate
+    const todo = { test: newTest, uuid: uid, date: date, checked: false };
     await addDoc(todosCollectionRef, todo);
     setTodos([...todos, todo]);
   };
 
-  const updateTodo = async (id) => {
+  const updateTodo = async (todo, id) => {
     const todoDoc = doc(db, 'todos', id);
-    const newFields = { test: updatedTest, uuid: uid, day: TODAY_DAY }; //day: selectedDate
+    const newFields = {
+      test: updatedTest,
+      uuid: todo.uuid,
+      date: todo.date,
+      checked: todo.checked,
+    };
+
     await setDoc(todoDoc, newFields);
-    setTodos([...todos, newFields].filter((todo) => id != todo.id));
+    setTodos([...todos, newFields].filter((todo) => id !== todo.id));
   };
 
   const deleteTodo = async (id) => {
@@ -56,9 +59,22 @@ export function TodoContainer() {
     setTodos(todos.filter((todo) => id !== todo.id));
   };
 
-  function handleClick(navigate) {
-    navigate({ LOGIN_PAGE });
-  }
+  const markAsDoneTodo = async (todo, id) => {
+    const todoDoc = doc(db, 'todos', id);
+
+    const newFields = {
+      test: todo.test,
+      uuid: todo.uuid,
+      date: todo.date,
+      checked: !todo.checked,
+    };
+    await setDoc(todoDoc, newFields);
+    setTodos([...todos, newFields].filter((todo) => id !== todo.id));
+  };
+
+  const filterByDate = () => {
+    setTodos(todos.filter((todo) => date === todo.date));
+  };
 
   const handleChangeText = (event) => {
     setNewTest(event.target.value);
@@ -68,11 +84,14 @@ export function TodoContainer() {
     setUpdatedTest(event.target.value);
   };
 
-  const handleClickUpdateText = (el) => updateTodo(el.id);
+  const handleClickUpdateText = (el) => updateTodo(el, el.id);
 
   const handleClickDeleteTodo = (el) => deleteTodo(el.id);
 
+  const handleChangeMarkAsDone = (el) => markAsDoneTodo(el, el.id);
+
   useEffect(() => {
+    console.log(useEffect);
     const getTodos = async () => {
       const data = await getDocs(todosCollectionRef);
       setTodos(
@@ -88,15 +107,23 @@ export function TodoContainer() {
   // //////
 
   return (
-    <TodoView
-      user={user}
-      todos={todos}
-      setTodos={setTodos}
-      createTodo={createTodo}
-      handleChangeText={handleChangeText}
-      handleChangeUpdateText={handleChangeUpdateText}
-      handleClickUpdateText={handleClickUpdateText}
-      handleClickDeleteTodo={handleClickDeleteTodo}
-    />
+    <div>
+      <CalendarContainer
+        date1={date}
+        setDate1={setDate}
+        filterByDate={filterByDate}
+      />
+      <TodoView
+        user={user}
+        todos={todos}
+        setTodos={setTodos}
+        createTodo={createTodo}
+        handleChangeText={handleChangeText}
+        handleChangeUpdateText={handleChangeUpdateText}
+        handleClickUpdateText={handleClickUpdateText}
+        handleClickDeleteTodo={handleClickDeleteTodo}
+        handleChangeMarkAsDone={handleChangeMarkAsDone}
+      />
+    </div>
   );
 }

@@ -1,0 +1,95 @@
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+p {
+  font-family: Commissioner;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 24px;
+  line-height: 140%;
+  letter-spacing: 0.01em;
+  color: #000000;
+  margin-bottom: 14px;
+}
+
+.wrapper {
+  padding-top: 3%;
+  padding-bottom: 5%;
+  min-width: 768px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #ffffff;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.title {
+  font-family: Commissioner;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 64px;
+  line-height: 140%;
+  letter-spacing: 0.01em;
+  color: #000000;
+  margin-bottom: 56px;
+}
+
+.signin__input {
+  width: 400px;
+  height: 47px;
+  border: 2px solid rgba(77, 77, 77, 0.47);
+  box-sizing: border-box;
+  border-radius: 10px;
+  padding-left: 16px;
+  font-family: Commissioner;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 24px;
+  line-height: 140%;
+
+  letter-spacing: 0.01em;
+  color: #000000;
+  margin-bottom: 32px;
+}
+
+.signin__btn {
+  width: 400px;
+  height: 47px;
+  font-family: Commissioner;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 24px;
+  line-height: 140%;
+  letter-spacing: 0.01em;
+  color: #ffffff;
+  background: #1bb7ac;
+  border: none;
+  border-radius: 10px;
+  margin-top: 24px;
+  margin-bottom: 56px;
+}
+
+.link {
+  font-family: Commissioner;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 24px;
+  line-height: 140%;
+  letter-spacing: 0.01em;
+  text-decoration: none;
+  color: #7b61ff;
+}

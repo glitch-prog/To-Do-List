@@ -4,7 +4,6 @@ import { onAuthStateChanged, signOut } from 'firebase/auth';
 import { auth } from '../../../config/firebase-config';
 import { useNavigate } from 'react-router-dom';
 import { LOGIN_PAGE } from '../../../constants/constants';
-import { LoginView } from '../../views/Login/Login';
 import { LogoutView } from '../../views/Logout/Logout';
 
 export function LogoutContainer() {
