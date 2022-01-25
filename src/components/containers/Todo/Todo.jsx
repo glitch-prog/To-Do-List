@@ -1,5 +1,5 @@
 import React from 'react';
-import { useState, useEffect, useMemo } from 'react';
+import { useState, useEffect, useMemo, useRef } from 'react';
 import {
   addDoc,
   getDocs,
@@ -19,8 +19,11 @@ export function TodoContainer() {
   const [todos, setTodos] = useState([]);
   const [user, setUser] = useState({});
   const [date, setDate] = useState();
+  const [checked, setChecked] = useState(false);
+  const ref = useRef(todos);
 
-  const todosCollectionRef = useMemo(() => collection(db, 'todos'), []);
+  // const todosCollectionRef = collection(db, 'todos');
+
   // const todosCollectionRef = collection(db, 'todos');
   let uid = null;
   const auth = getAuth();
@@ -35,6 +38,7 @@ export function TodoContainer() {
   });
 
   const createTodo = async () => {
+    const todosCollectionRef = collection(db, 'todos');
     const todo = { test: newTest, uuid: uid, date: date, checked: false };
     await addDoc(todosCollectionRef, todo);
     setTodos([...todos, todo]);
@@ -48,9 +52,9 @@ export function TodoContainer() {
       date: todo.date,
       checked: todo.checked,
     };
-
+    setChecked(newFields.checked);
     await setDoc(todoDoc, newFields);
-    setTodos([...todos, newFields].filter((todo) => id !== todo.id));
+    setTodos([...todos]);
   };
 
   const deleteTodo = async (id) => {
@@ -66,10 +70,12 @@ export function TodoContainer() {
       test: todo.test,
       uuid: todo.uuid,
       date: todo.date,
+      id: todo.id,
       checked: !todo.checked,
     };
     await setDoc(todoDoc, newFields);
-    setTodos([...todos, newFields].filter((todo) => id !== todo.id));
+    setTodos([...todos, newFields].filter((todo) => todo.id !== id));
+    console.log(todos);
   };
 
   const filterByDate = () => {
@@ -91,7 +97,9 @@ export function TodoContainer() {
   const handleChangeMarkAsDone = (el) => markAsDoneTodo(el, el.id);
 
   useEffect(() => {
+    const todosCollectionRef = collection(db, 'todos');
     console.log(useEffect);
+
     const getTodos = async () => {
       const data = await getDocs(todosCollectionRef);
       setTodos(
@@ -100,9 +108,9 @@ export function TodoContainer() {
           .filter((el) => el.uuid === uid)
       );
     };
-
+    ref.current = todos;
     getTodos();
-  }, [uid, todosCollectionRef]);
+  }, [uid]);
 
   // //////
 
@@ -116,6 +124,7 @@ export function TodoContainer() {
       <TodoView
         user={user}
         todos={todos}
+        refer={ref}
         setTodos={setTodos}
         createTodo={createTodo}
         handleChangeText={handleChangeText}

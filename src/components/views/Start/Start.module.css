@@ -16,9 +16,15 @@
   left: 50%;
   transform: translate(-50%, -50%);
   background-color: #ffffff;
-  border-radius: 20px;}
+  border-radius: 20px;
+}
 
 .start__card {
+  width: 252px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
   padding-left: 54px;
   padding-right: 54px;
   padding-top: 40px;
@@ -26,10 +32,69 @@
   border-radius: 15px;
 }
 
+.start__card:not(:last-child) {
+  margin-right: 90px;
+}
+
+.start__card h3 {
+  padding: 0;
+  margin-bottom: 21px;
+  font-family: Commissioner;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 36px;
+  line-height: 140%;
+  letter-spacing: 0.01em;
+  text-align: center;
+  color: #000000;
+}
+
+.start__card p {
+  margin-bottom: 20px;
+  font-family: Commissioner;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 13px;
+  line-height: 17px;
+  text-align: center;
+  color: #000000;
+}
+
+.start__card button {
+  padding-left: 40px;
+  padding-right: 40px;
+  padding-top: 12px;
+  padding-bottom: 12px;
+  font-family: Commissioner;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 17px;
+  line-height: 22px;
+  color: #ffffff;
+  border: none;
+  border-radius: 10px;
+}
+
 .start__card__sign__up {
   background: #ecfaf9;
 }
 
+.start__card__sign__up button {
+  background: #1bb7ac;
+}
+
 .start__card__sign__in {
   background: #f1efff;
+}
+
+.start__card__sign__in button {
+  background: #7879f1;
+}
+
+.link {
+  font-family: Commissioner;
+  font-style: normal;
+  font-weight: normal;
+  text-decoration: none;
+  color: #ffffff;
 }

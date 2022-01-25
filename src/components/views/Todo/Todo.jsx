@@ -4,6 +4,7 @@ import styles from './Todo.module.css';
 
 export function TodoView({
   todos,
+  refer,
   createTodo,
   handleChangeText,
   handleChangeUpdateText,
@@ -19,7 +20,7 @@ export function TodoView({
       <button onClick={createTodo}>add</button>
       {todos.map((todo) => {
         return (
-          <div key={todo.id}>
+          <div ref={refer} key={todo.id}>
             <p>{todo.test}</p>
             <input type='text' onChange={handleChangeUpdateText}></input>
             <button onClick={() => handleClickUpdateText(todo)}>Change</button>

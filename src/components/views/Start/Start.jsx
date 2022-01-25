@@ -11,13 +11,21 @@ export default function Start() {
       <div className={`${styles.start__card} ${styles.start__card__sign__up}`}>
         <h3>Sign up</h3>
         <p>If you have an account, click here</p>
-        <Link to={REGISTER_PAGE}>Sign up</Link>
+        <button>
+          <Link to={REGISTER_PAGE} className={styles.link}>
+            Sign up
+          </Link>
+        </button>
       </div>
 
       <div className={`${styles.start__card} ${styles.start__card__sign__in}`}>
         <h3>Sign in</h3>
         <p>If you want to create a new account, click here</p>
-        <Link to={LOGIN_PAGE}>Sign in</Link>
+        <button>
+          <Link to={LOGIN_PAGE} className={styles.link}>
+            Sign in
+          </Link>
+        </button>
       </div>
     </div>
   );
