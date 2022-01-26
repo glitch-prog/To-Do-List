@@ -37,14 +37,35 @@ export function TodoContainer() {
     setUser(currentUser);
   });
 
+  const getTodos = async (todosCollectionRef) => {
+    const data = await getDocs(todosCollectionRef);
+    setTodos(
+      data.docs
+        .map((doc) => ({ ...doc.data(), id: doc.id }))
+        .filter((el) => el.uuid === uid)
+    );
+  };
+
+  const filterByDate = async () => {
+    const todosCollectionRef = collection(db, 'todos');
+    const data = await getDocs(todosCollectionRef);
+    setTodos(
+      data.docs
+        .map((doc) => ({ ...doc.data(), id: doc.id }))
+        .filter((todo) => todo.date === date)
+    );
+  };
+
   const createTodo = async () => {
     const todosCollectionRef = collection(db, 'todos');
     const todo = { test: newTest, uuid: uid, date: date, checked: false };
     await addDoc(todosCollectionRef, todo);
-    setTodos([...todos, todo]);
+    // setTodos([...todos, todo]);
+    getTodos(todosCollectionRef);
   };
 
   const updateTodo = async (todo, id) => {
+    const todosCollectionRef = collection(db, 'todos');
     const todoDoc = doc(db, 'todos', id);
     const newFields = {
       test: updatedTest,
@@ -54,33 +75,37 @@ export function TodoContainer() {
     };
     setChecked(newFields.checked);
     await setDoc(todoDoc, newFields);
-    setTodos([...todos]);
+    getTodos(todosCollectionRef);
   };
 
   const deleteTodo = async (id) => {
+    const todosCollectionRef = collection(db, 'todos');
     const todoDoc = doc(db, 'todos', id);
     await deleteDoc(todoDoc);
-    setTodos(todos.filter((todo) => id !== todo.id));
+    getTodos(todosCollectionRef);
   };
 
   const markAsDoneTodo = async (todo, id) => {
     const todoDoc = doc(db, 'todos', id);
-
-    const newFields = {
+    const todosCollectionRef = collection(db, 'todos');
+    const markedTodo = {
       test: todo.test,
       uuid: todo.uuid,
       date: todo.date,
       id: todo.id,
       checked: !todo.checked,
     };
-    await setDoc(todoDoc, newFields);
-    setTodos([...todos, newFields].filter((todo) => todo.id !== id));
-    console.log(todos);
+    await setDoc(todoDoc, markedTodo);
+    getTodos(todosCollectionRef);
   };
 
-  const filterByDate = () => {
-    setTodos(todos.filter((todo) => date === todo.date));
-  };
+  // const filterByDate = () => {
+  //   const todosCollectionRef = collection(db, 'todos');
+  //   getTodos(todosCollectionRef);
+  //   const arr = [...todos];
+  //   console.log(arr);
+  //   setTodos(arr.filter((todo) => date === todo.date));
+  // };
 
   const handleChangeText = (event) => {
     setNewTest(event.target.value);
@@ -100,20 +125,14 @@ export function TodoContainer() {
     const todosCollectionRef = collection(db, 'todos');
     console.log(useEffect);
 
-    const getTodos = async () => {
-      const data = await getDocs(todosCollectionRef);
-      setTodos(
-        data.docs
-          .map((doc) => ({ ...doc.data(), id: doc.id }))
-          .filter((el) => el.uuid === uid)
-      );
-    };
-    ref.current = todos;
-    getTodos();
+    // ref.current = todos;
+    getTodos(todosCollectionRef);
   }, [uid]);
 
   // //////
-
+  const filteredTodos = todos.filter((todo) =>
+    date ? date === todo.date : true
+  );
   return (
     <div>
       <CalendarContainer
@@ -123,7 +142,7 @@ export function TodoContainer() {
       />
       <TodoView
         user={user}
-        todos={todos}
+        todos={filteredTodos}
         refer={ref}
         setTodos={setTodos}
         createTodo={createTodo}

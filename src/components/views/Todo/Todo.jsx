@@ -1,7 +1,6 @@
 import React from 'react';
 import { LogoutContainer } from '../../containers/Logout/Logout';
 import styles from './Todo.module.css';
-
 export function TodoView({
   todos,
   refer,
@@ -15,9 +14,19 @@ export function TodoView({
   // //////
 
   return (
-    <div className='App'>
-      <input type='text' placeholder='name' onChange={handleChangeText}></input>
-      <button onClick={createTodo}>add</button>
+    <div className={styles.main__block}>
+      <div className={styles.input__form}>
+        <input
+          type='text'
+          placeholder='name'
+          onChange={handleChangeText}
+          className={styles.input__form__input}
+        ></input>
+        <button onClick={createTodo} className={styles.input__form__button}>
+          <img src='./Todo.images/btn__add.png' alt='' />
+        </button>
+      </div>
+
       {todos.map((todo) => {
         return (
           <div ref={refer} key={todo.id}>
