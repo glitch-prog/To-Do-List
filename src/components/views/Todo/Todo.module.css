@@ -13,30 +13,122 @@
   border-radius: 20px;
 }
 
+.header__title {
+  padding: 40px 0;
+  font-family: Commissioner;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 36px;
+  line-height: 140%;
+  letter-spacing: 0.01em;
+  color: #000000;
+}
+
 .input__form {
-  /* padding: 25px 30px; */
+  min-width: 622px;
   padding: 0 30px;
+  margin-bottom: 69px;
   display: flex;
+  position: relative;
   flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
   background: #ffffff;
   border: 2px solid #0a0a0a;
-  box-sizing: border-box;
+
   border-radius: 10px;
 }
 
-.input__form input {
+.input__form__wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.input__form__input {
+  margin-left: 33px;
   height: 70px;
   border: none;
   padding-left: 10px;
+  outline: none;
+  font-family: Commissioner;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 18px;
+  line-height: 22px;
 }
 
 .input__form__button {
-  width: 25px;
-  height: 25px;
+  height: 30px;
+  background: transparent;
   border: none;
-  background: url('./Todo.images/btn__add.png');
+}
+
+.todo__item {
+  margin-bottom: 8px;
+  padding: 24px 32px;
+  min-width: 622px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #ecfaf9;
+  border-radius: 10px;
+}
+
+.checked__todo__item {
+  margin-bottom: 8px;
+  padding: 24px 32px;
+  min-width: 622px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #f1efff;
+  border-radius: 10px;
+}
+
+.checked__todo__item p {
+  color: #afafaf;
+  text-decoration: line-through;
+}
+
+.todo__item__text {
+  margin: 0px;
+  font-family: Commissioner;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 18px;
+  line-height: 22px;
+  color: #000000;
+}
+
+.todo__item__btns {
+  width: 60%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.unchecked__btn {
+  height: 24px;
+  width: 24px;
+  border: 1px solid #000000;
+  border-radius: 5px;
+  color: #ecfaf9;
+  background: transparent;
 }
 
 .checked__btn {
-  background: red;
+  text-align: center;
+  height: 24px;
+  width: 24px;
+  /* border: 1px solid #000000; */
+  border-radius: 5px;
+  border: none;
+  background: #5d5fef;
+  color: #ffffff;
+}
+
+.delete__btn {
+  border: none;
+  background: transparent;
 }

@@ -1,5 +1,5 @@
 import React from 'react';
-import { useState, useEffect, useMemo, useRef } from 'react';
+import { useState, useEffect, useRef, useCallback } from 'react';
 import {
   addDoc,
   getDocs,
@@ -19,12 +19,8 @@ export function TodoContainer() {
   const [todos, setTodos] = useState([]);
   const [user, setUser] = useState({});
   const [date, setDate] = useState();
-  const [checked, setChecked] = useState(false);
   const ref = useRef(todos);
 
-  // const todosCollectionRef = collection(db, 'todos');
-
-  // const todosCollectionRef = collection(db, 'todos');
   let uid = null;
   const auth = getAuth();
   onAuthStateChanged(auth, (user) => {
@@ -46,21 +42,14 @@ export function TodoContainer() {
     );
   };
 
-  const filterByDate = async () => {
-    const todosCollectionRef = collection(db, 'todos');
-    const data = await getDocs(todosCollectionRef);
-    setTodos(
-      data.docs
-        .map((doc) => ({ ...doc.data(), id: doc.id }))
-        .filter((todo) => todo.date === date)
-    );
-  };
+  const getTodosCallback = useCallback((todosCollectionRef) => {
+    getTodos(todosCollectionRef);
+  }, []);
 
   const createTodo = async () => {
     const todosCollectionRef = collection(db, 'todos');
     const todo = { test: newTest, uuid: uid, date: date, checked: false };
     await addDoc(todosCollectionRef, todo);
-    // setTodos([...todos, todo]);
     getTodos(todosCollectionRef);
   };
 
@@ -73,7 +62,7 @@ export function TodoContainer() {
       date: todo.date,
       checked: todo.checked,
     };
-    setChecked(newFields.checked);
+
     await setDoc(todoDoc, newFields);
     getTodos(todosCollectionRef);
   };
@@ -99,14 +88,6 @@ export function TodoContainer() {
     getTodos(todosCollectionRef);
   };
 
-  // const filterByDate = () => {
-  //   const todosCollectionRef = collection(db, 'todos');
-  //   getTodos(todosCollectionRef);
-  //   const arr = [...todos];
-  //   console.log(arr);
-  //   setTodos(arr.filter((todo) => date === todo.date));
-  // };
-
   const handleChangeText = (event) => {
     setNewTest(event.target.value);
   };
@@ -125,20 +106,21 @@ export function TodoContainer() {
     const todosCollectionRef = collection(db, 'todos');
     console.log(useEffect);
 
-    // ref.current = todos;
-    getTodos(todosCollectionRef);
-  }, [uid]);
+    getTodosCallback(todosCollectionRef);
+  }, [getTodosCallback]);
 
-  // //////
   const filteredTodos = todos.filter((todo) =>
     date ? date === todo.date : true
   );
+
+  const showAllTodos = () => setDate('');
+
   return (
     <div>
       <CalendarContainer
         date1={date}
         setDate1={setDate}
-        filterByDate={filterByDate}
+        showAllTodos={showAllTodos}
       />
       <TodoView
         user={user}

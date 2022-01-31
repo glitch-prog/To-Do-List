@@ -10,7 +10,7 @@ export function LoginView({ onChangePassword, onChangeEmail, onClickLogin }) {
         <div className={styles.form}>
           <h3 className={styles.title}> Sign in </h3>
           <div>
-            <p>Email</p>
+            <p className={styles.label}>Email</p>
             <input
               className={styles.signin__input}
               placeholder='Enter your email...'
@@ -18,7 +18,7 @@ export function LoginView({ onChangePassword, onChangeEmail, onClickLogin }) {
             />
           </div>
           <div>
-            <p>Password</p>
+            <p className={styles.label}>Password</p>
             <input
               className={styles.signin__input}
               placeholder='Enter your password...'

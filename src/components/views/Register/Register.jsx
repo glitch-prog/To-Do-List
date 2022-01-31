@@ -12,7 +12,7 @@ export default function RegisterView({
       <div className={styles.form}>
         <h3 className={styles.title}> Sign up </h3>
         <div>
-          <p>Email</p>
+          <p className={styles.label}>Email</p>
           <input
             className={styles.signup__input}
             placeholder='Enter your email address...'
@@ -20,7 +20,7 @@ export default function RegisterView({
           />
         </div>
         <div>
-          <p>Password</p>
+          <p className={styles.label}>Password</p>
           <input
             className={styles.signup__input}
             placeholder='Enter your password...'
