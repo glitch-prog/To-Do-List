@@ -56,15 +56,18 @@ export function TodoContainer() {
   const updateTodo = async (todo, id) => {
     const todosCollectionRef = collection(db, 'todos');
     const todoDoc = doc(db, 'todos', id);
-    const newFields = {
-      test: updatedTest,
-      uuid: todo.uuid,
-      date: todo.date,
-      checked: todo.checked,
-    };
 
-    await setDoc(todoDoc, newFields);
-    getTodos(todosCollectionRef);
+    if (updateTodo) {
+      const newFields = {
+        test: updatedTest,
+        uuid: todo.uuid,
+        date: todo.date,
+        checked: todo.checked,
+      };
+
+      await setDoc(todoDoc, newFields);
+      getTodos(todosCollectionRef);
+    }
   };
 
   const deleteTodo = async (id) => {
@@ -91,12 +94,6 @@ export function TodoContainer() {
   const handleChangeText = (event) => {
     setNewTest(event.target.value);
   };
-
-  const handleChangeUpdateText = (event) => {
-    setUpdatedTest(event.target.value);
-  };
-
-  const handleClickUpdateText = (el) => updateTodo(el, el.id);
 
   const handleClickDeleteTodo = (el) => deleteTodo(el.id);
 
@@ -127,10 +124,10 @@ export function TodoContainer() {
         todos={filteredTodos}
         refer={ref}
         setTodos={setTodos}
+        setUpdatedTest={setUpdatedTest}
         createTodo={createTodo}
+        updateTodo={updateTodo}
         handleChangeText={handleChangeText}
-        handleChangeUpdateText={handleChangeUpdateText}
-        handleClickUpdateText={handleClickUpdateText}
         handleClickDeleteTodo={handleClickDeleteTodo}
         handleChangeMarkAsDone={handleChangeMarkAsDone}
       />

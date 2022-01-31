@@ -10,6 +10,8 @@ import { TodoItemContainer } from '../../containers/TodoItem/TodoItem';
 export function TodoView({
   todos,
   createTodo,
+  updateTodo,
+  setUpdatedTest,
   handleChangeText,
   handleChangeUpdateText,
   handleClickUpdateText,
@@ -43,7 +45,9 @@ export function TodoView({
             key={todo.id}
             todo={todo}
             styles={styles}
+            updateTodo={updateTodo}
             deleteBtn={deleteBtn}
+            setUpdatedTest={setUpdatedTest}
             handleChangeMarkAsDone={handleChangeMarkAsDone}
             handleClickDeleteTodo={handleClickDeleteTodo}
             handleClickUpdateText={handleClickUpdateText}

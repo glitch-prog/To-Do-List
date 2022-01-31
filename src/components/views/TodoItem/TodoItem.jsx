@@ -3,11 +3,14 @@ import React from 'react';
 export function TodoItemView({
   todo,
   styles,
+  showChecked,
+  setShowChecked,
   deleteBtn,
   handleChangeMarkAsDone,
   handleClickDeleteTodo,
   handleClickUpdateText,
   handleChangeUpdateText,
+  handleClickChange,
 }) {
   return (
     <div
@@ -24,8 +27,14 @@ export function TodoItemView({
       <p className={styles.todo__item__text}>{todo.test}</p>
 
       <div className={styles.todo__item__btns}>
-        <input type='text' onChange={handleChangeUpdateText}></input>
-        <button onClick={() => handleClickUpdateText(todo)}>Change</button>
+        {showChecked ? (
+          <div>
+            <input type='text' onChange={handleChangeUpdateText}></input>
+            <button onClick={() => handleClickUpdateText(todo)}>Change</button>
+          </div>
+        ) : (
+          <button onClick={handleClickChange}>изменить</button>
+        )}
 
         <button
           className={styles.delete__btn}
