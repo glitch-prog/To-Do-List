@@ -44,3 +44,4 @@ You don't have to ever use `eject`. The curated feature set is suitable for smal
 
 ## Database snapshot
 
+![image](https://user-images.githubusercontent.com/80006516/151978170-2402986a-2e23-4044-b43a-c5b006a6aa5f.png)
