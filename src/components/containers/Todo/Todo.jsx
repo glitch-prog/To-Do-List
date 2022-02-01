@@ -11,7 +11,6 @@ import {
 import { db } from '../../../config/firebase-config';
 import { getAuth, onAuthStateChanged } from 'firebase/auth';
 import { TodoView } from '../../views/Todo/Todo';
-import { CalendarContainer } from '../Calendar/Calendar';
 
 export function TodoContainer() {
   const [newTest, setNewTest] = useState('');
@@ -33,24 +32,26 @@ export function TodoContainer() {
     setUser(currentUser);
   });
 
-  const getTodos = async (todosCollectionRef) => {
-    const data = await getDocs(todosCollectionRef);
-    setTodos(
-      data.docs
-        .map((doc) => ({ ...doc.data(), id: doc.id }))
-        .filter((el) => el.uuid === uid)
-    );
-  };
-
-  const getTodosCallback = useCallback((todosCollectionRef) => {
-    getTodos(todosCollectionRef);
-  }, []);
+  const getTodos = useCallback(
+    async (todosCollectionRef) => {
+      const data = await getDocs(todosCollectionRef);
+      setTodos(
+        data.docs
+          .map((doc) => ({ ...doc.data(), id: doc.id }))
+          .filter((el) => el.uuid === uid)
+      );
+      console.log(setTodos);
+      console.log(data.docs);
+    },
+    [uid]
+  );
 
   const createTodo = async () => {
     const todosCollectionRef = collection(db, 'todos');
     const todo = { test: newTest, uuid: uid, date: date, checked: false };
     await addDoc(todosCollectionRef, todo);
-    getTodos(todosCollectionRef);
+    const test = getTodos(todosCollectionRef);
+    console.log(test);
   };
 
   const updateTodo = async (todo, id) => {
@@ -101,10 +102,8 @@ export function TodoContainer() {
 
   useEffect(() => {
     const todosCollectionRef = collection(db, 'todos');
-    console.log(useEffect);
-
-    getTodosCallback(todosCollectionRef);
-  }, [getTodosCallback]);
+    getTodos(todosCollectionRef);
+  }, [getTodos]);
 
   const filteredTodos = todos.filter((todo) =>
     date ? date === todo.date : true
@@ -114,16 +113,14 @@ export function TodoContainer() {
 
   return (
     <div>
-      <CalendarContainer
+      <TodoView
         date1={date}
         setDate1={setDate}
-        showAllTodos={showAllTodos}
-      />
-      <TodoView
         user={user}
         todos={filteredTodos}
         refer={ref}
         setTodos={setTodos}
+        showAllTodos={showAllTodos}
         setUpdatedTest={setUpdatedTest}
         createTodo={createTodo}
         updateTodo={updateTodo}

@@ -1,0 +1,13 @@
+.user__btn {
+  border: none;
+  background: transparent;
+}
+
+.main__block {
+  padding: 10px;
+  position: fixed;
+  z-index: 1;
+  right: 30%;
+  background: #afafaf;
+  border-radius: 10px;
+}

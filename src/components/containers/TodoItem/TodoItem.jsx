@@ -6,6 +6,7 @@ export function TodoItemContainer({
   todo,
   styles,
   deleteBtn,
+  changeBtn,
   updateTodo,
   setUpdatedTest,
   handleChangeMarkAsDone,
@@ -31,6 +32,7 @@ export function TodoItemContainer({
         showChecked={showChecked}
         setShowChecked={setShowChecked}
         setUpdatedTest={setUpdatedTest}
+        changeBtn={changeBtn}
         deleteBtn={deleteBtn}
         handleChangeMarkAsDone={handleChangeMarkAsDone}
         handleClickDeleteTodo={handleClickDeleteTodo}

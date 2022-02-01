@@ -4,6 +4,7 @@ export function TodoItemView({
   todo,
   styles,
   showChecked,
+  changeBtn,
   setShowChecked,
   deleteBtn,
   handleChangeMarkAsDone,
@@ -24,16 +25,20 @@ export function TodoItemView({
       >
         ✓
       </button>
+
       <p className={styles.todo__item__text}>{todo.test}</p>
 
       <div className={styles.todo__item__btns}>
+        <p className={styles.todo__item__text}>{todo.date}</p>
         {showChecked ? (
           <div>
             <input type='text' onChange={handleChangeUpdateText}></input>
-            <button onClick={() => handleClickUpdateText(todo)}>Change</button>
+            <button onClick={() => handleClickUpdateText(todo)}>✓</button>
           </div>
         ) : (
-          <button onClick={handleClickChange}>изменить</button>
+          <button className={styles.change__btn} onClick={handleClickChange}>
+            <img src={changeBtn} alt='' />
+          </button>
         )}
 
         <button

@@ -1,3 +1,8 @@
+html {
+  display: flex;
+  justify-content: center;
+}
+
 .main__block {
   position: absolute;
   width: 768px;
@@ -5,12 +10,23 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+  position: relative;
   background: #ffffff;
   border-radius: 20px;
+}
+
+.header {
+  min-width: 622px;
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+}
+
+.header__btns {
+  width: 100px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .header__title {
@@ -62,6 +78,7 @@
   height: 30px;
   background: transparent;
   border: none;
+  cursor: pointer;
 }
 
 .todo__item {
@@ -73,6 +90,10 @@
   align-items: center;
   background: #ecfaf9;
   border-radius: 10px;
+}
+.todo__item__btns {
+  display: flex;
+  justify-content: right;
 }
 
 .checked__todo__item {
@@ -104,7 +125,7 @@
 .todo__item__btns {
   width: 60%;
   display: flex;
-  justify-content: space-between;
+  justify-content: space-around;
   align-items: center;
 }
 
@@ -128,7 +149,9 @@
   color: #ffffff;
 }
 
+.change__btn,
 .delete__btn {
   border: none;
   background: transparent;
+  cursor: pointer;
 }

@@ -13,12 +13,10 @@ export function LoginContainer() {
 
   const handleOnChangeEmail = (event) => {
     setLoginEmail(event.target.value);
-    console.log(loginEmail);
   };
 
   const handleOnChangePassword = (event) => {
     setLoginPassword(event.target.value);
-    console.log(loginPassword);
   };
 
   const handleLoginClick = async () => {

@@ -1,0 +1,25 @@
+.main__block {
+  width: 300px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  background: #afafaf;
+}
+
+.main__block__text {
+  font-family: Commissioner;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 18px;
+  line-height: 22px;
+  color: #000000;
+}
+
+.main__block__btns {
+  display: flex;
+}
+
+.main__block__btns__btn {
+  width: 150px;
+  height: 50px;
+}

@@ -9,6 +9,9 @@ import { LogoutView } from '../../views/Logout/Logout';
 export function LogoutContainer() {
   const navigate = useNavigate();
   const [user, setUser] = useState({});
+  const [showUser, setShowUser] = useState(false);
+
+  const handleClickShowUser = () => setShowUser(!showUser);
 
   onAuthStateChanged(auth, (currentUser) => {
     setUser(currentUser);
@@ -18,5 +21,12 @@ export function LogoutContainer() {
     await signOut(auth);
     navigate(LOGIN_PAGE);
   };
-  return <LogoutView logout={logout} user={user} />;
+  return (
+    <LogoutView
+      logout={logout}
+      user={user}
+      showUser={showUser}
+      handleClickShowUser={handleClickShowUser}
+    />
+  );
 }
