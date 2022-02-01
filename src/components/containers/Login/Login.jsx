@@ -5,6 +5,7 @@ import { TODO_PAGE } from '../../../constants/constants';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { signInWithEmailAndPassword } from 'firebase/auth';
+import { ErrorMessageView } from '../../views/ErrorMessage/ErrorMessage';
 
 export function LoginContainer() {
   const navigate = useNavigate();
@@ -35,10 +36,13 @@ export function LoginContainer() {
   };
 
   return (
-    <LoginView
-      onChangeEmail={handleOnChangeEmail}
-      onChangePassword={handleOnChangePassword}
-      onClickLogin={handleLoginClick}
-    />
+    <div>
+      <ErrorMessageView />
+      <LoginView
+        onChangeEmail={handleOnChangeEmail}
+        onChangePassword={handleOnChangePassword}
+        onClickLogin={handleLoginClick}
+      />
+    </div>
   );
 }

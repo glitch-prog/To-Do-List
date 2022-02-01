@@ -58,17 +58,17 @@ export function TodoContainer() {
     const todosCollectionRef = collection(db, 'todos');
     const todoDoc = doc(db, 'todos', id);
 
-    if (updateTodo) {
+    if (updatedTest) {
       const newFields = {
         test: updatedTest,
         uuid: todo.uuid,
         date: todo.date,
         checked: todo.checked,
       };
-
       await setDoc(todoDoc, newFields);
       getTodos(todosCollectionRef);
     }
+    setUpdatedTest('');
   };
 
   const deleteTodo = async (id) => {
@@ -100,16 +100,16 @@ export function TodoContainer() {
 
   const handleChangeMarkAsDone = (el) => markAsDoneTodo(el, el.id);
 
-  useEffect(() => {
-    const todosCollectionRef = collection(db, 'todos');
-    getTodos(todosCollectionRef);
-  }, [getTodos]);
-
   const filteredTodos = todos.filter((todo) =>
     date ? date === todo.date : true
   );
 
   const showAllTodos = () => setDate('');
+
+  useEffect(() => {
+    const todosCollectionRef = collection(db, 'todos');
+    getTodos(todosCollectionRef);
+  }, [getTodos]);
 
   return (
     <div>

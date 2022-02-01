@@ -1,3 +1,4 @@
+import React from 'react';
 import { LoginContainer } from './components/containers/Login/Login';
 import Start from './components/views/Start/Start';
 import { Routes, Route } from 'react-router-dom';
